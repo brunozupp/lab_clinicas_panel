@@ -19,6 +19,7 @@ class UserRepository implements IUserRepository {
       final Response(data: {"access_token": accessToken}) = await restClient.unauth.post("/auth", data: {
         "email": email,
         "password": password,
+        "admin": true,
       });
 
       return Right(accessToken);
