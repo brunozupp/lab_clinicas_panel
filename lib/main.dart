@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:lab_clinicas_core/lab_clinicas_core.dart';
+import 'package:lab_clinicas_panel/src/pages/login/login_router.dart';
 import 'package:lab_clinicas_panel/src/pages/splash/splash_page.dart';
 
 import 'src/binding/lab_clinicias_application_binding.dart';
@@ -34,14 +35,9 @@ class LabClinicasPanelApp extends StatelessWidget {
           path: "/",
         ),
       ],
-      // pages: const [
-
-      // ],
-      // modules: [
-      //   AuthModule(),
-      //   HomeModule(),
-      //   SelfServiceModule()
-      // ],
+      pages: const [
+        LoginRouter(),
+      ],
     );
   }
 }
