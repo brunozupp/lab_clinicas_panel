@@ -38,6 +38,7 @@ class PanelMainWidget extends StatelessWidget {
               style: LabClinicasTheme.titleStyle.copyWith(
                 color: labelColor,
               ),
+              textAlign: TextAlign.center,
             ),
             Container(
               alignment: Alignment.center,
