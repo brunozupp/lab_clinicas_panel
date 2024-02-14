@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:lab_clinicas_core/lab_clinicas_core.dart';
-import 'package:lab_clinicas_panel/src/pages/home/home_controller.dart';
+import 'package:lab_clinicas_panel/src/pages/panel/panel_controller.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class PanelPage extends StatefulWidget {
+  const PanelPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PanelPage> createState() => _PanelPageState();
 }
 
-class _HomePageState extends State<HomePage> with MessageViewMixin {
+class _PanelPageState extends State<PanelPage> with MessageViewMixin {
 
-  final _controller = Injector.get<HomeController>();
+  final _controller = Injector.get<PanelController>();
 
   @override
   void initState() {
