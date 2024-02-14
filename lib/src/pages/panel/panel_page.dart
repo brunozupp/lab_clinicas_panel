@@ -4,6 +4,8 @@ import 'package:lab_clinicas_core/lab_clinicas_core.dart';
 import 'package:lab_clinicas_panel/src/pages/panel/panel_controller.dart';
 import 'package:lab_clinicas_panel/src/pages/panel/widgets/panel_main_widget.dart';
 
+import 'widgets/password_tile_widget.dart';
+
 class PanelPage extends StatefulWidget {
   const PanelPage({super.key});
 
@@ -62,6 +64,41 @@ class _PanelPageState extends State<PanelPage> with MessageViewMixin {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Divider(
+              color: LabClinicasTheme.orangeColor,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Text(
+              "Últimos chamados",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: LabClinicasTheme.orangeColor,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              runAlignment: WrapAlignment.center,
+              children: [
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+                PasswordTileWidget(),
+              ],
+            )
           ],
         ),
       ),
