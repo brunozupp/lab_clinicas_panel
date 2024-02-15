@@ -39,7 +39,7 @@ class PanelCheckinRepository implements IPanelCheckinRepository{
 
   Future<List<PanelCheckinModel>> requestData() async {
 
-    final dateFormat = DateFormat("y-MM-d");
+    final dateFormat = DateFormat("y-MM-dd");
 
     final Response(:List data) = await _restClient.auth.get("/painelCheckin", queryParameters: {
       "time_called": dateFormat.format(DateTime.now()),

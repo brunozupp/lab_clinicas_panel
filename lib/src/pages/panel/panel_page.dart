@@ -3,7 +3,9 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:lab_clinicas_core/lab_clinicas_core.dart';
 import 'package:lab_clinicas_panel/src/pages/panel/panel_controller.dart';
 import 'package:lab_clinicas_panel/src/pages/panel/widgets/panel_main_widget.dart';
+import 'package:signals_flutter/signals_flutter.dart';
 
+import '../../models/panel_checkin_model.dart';
 import 'widgets/password_tile_widget.dart';
 
 class PanelPage extends StatefulWidget {
@@ -37,6 +39,28 @@ class _PanelPageState extends State<PanelPage> with MessageViewMixin {
 
     final sizeOf = MediaQuery.sizeOf(context);
 
+    final PanelCheckinModel? current;
+    final PanelCheckinModel? lastCall;
+    final List<PanelCheckinModel>? others;
+
+    // watch(context) -> faz com que minha tela fique escutando as alterações nessa variável "paienlData"
+    // é como se envolvesse todo o meu build num widget especializado em observar as mudanças em "painelData"
+    final listPanel = _controller.painelData.watch(context);
+
+    current = listPanel.firstOrNull;
+    
+    if(listPanel.isNotEmpty) {
+      listPanel.removeAt(0);
+    }
+
+    lastCall = listPanel.firstOrNull;
+
+    if(listPanel.isNotEmpty) {
+      listPanel.removeAt(0);
+    }
+
+    others = listPanel;
+
     return Scaffold(
       appBar: LabClinicasAppBar(),
       body: SingleChildScrollView(
@@ -48,29 +72,34 @@ class _PanelPageState extends State<PanelPage> with MessageViewMixin {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: sizeOf.width * 0.4,
-                  child: const PanelMainWidget(
-                    passwordLabel: "Senha anterior",
-                    password: "BG5898",
-                    deskNumber: "03",
-                    labelColor: LabClinicasTheme.blueColor,
-                    buttonColor: LabClinicasTheme.orangeColor,
-                  ),
-                ),
+                lastCall != null
+                  ? SizedBox(
+                    width: sizeOf.width * 0.4,
+                    child: PanelMainWidget(
+                      passwordLabel: "Senha anterior",
+                      password: lastCall.password,
+                      deskNumber: lastCall.attendantDesk.toString(),
+                      labelColor: LabClinicasTheme.blueColor,
+                      buttonColor: LabClinicasTheme.orangeColor,
+                    ),
+                  )
+                  : const SizedBox.shrink(),
+                
                 const SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
-                SizedBox(
-                  width: sizeOf.width * 0.4,
-                  child: const PanelMainWidget(
-                    passwordLabel: "Chamando senha",
-                    password: "BG5898",
-                    deskNumber: "03",
-                    labelColor: LabClinicasTheme.orangeColor,
-                    buttonColor: LabClinicasTheme.blueColor,
-                  ),
-                ),
+                current != null 
+                  ? SizedBox(
+                    width: sizeOf.width * 0.4,
+                    child: PanelMainWidget(
+                      passwordLabel: "Chamando senha",
+                      password: current.password,
+                      deskNumber: current.attendantDesk.toString(),
+                      labelColor: LabClinicasTheme.orangeColor,
+                      buttonColor: LabClinicasTheme.blueColor,
+                    ),
+                  )
+                  : const SizedBox.shrink(),
               ],
             ),
             const SizedBox(
@@ -93,20 +122,14 @@ class _PanelPageState extends State<PanelPage> with MessageViewMixin {
             const SizedBox(
               height: 16,
             ),
-            const Wrap(
+            Wrap(
               spacing: 10,
               runSpacing: 10,
               runAlignment: WrapAlignment.center,
-              children: [
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-                PasswordTileWidget(),
-              ],
+              children: others.map((panel) => PasswordTileWidget(
+                password: panel.password,
+                deskNumber: panel.attendantDesk.toString(),
+              )).toList(),
             )
           ],
         ),
