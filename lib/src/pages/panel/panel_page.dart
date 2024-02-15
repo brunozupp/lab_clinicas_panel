@@ -20,7 +20,16 @@ class _PanelPageState extends State<PanelPage> with MessageViewMixin {
   @override
   void initState() {
     messageListener(_controller);
+
+    _controller.listenerPanel();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
